@@ -1,8 +1,7 @@
-function WeatherApi() {
+function WeatherApi(cityName, countryCode) {
     const apiKey = 'appid=c35713a92c9e65f4fcced7daa379087f';
 
-    function geoApi(cityName, countryCode) {
-        fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&${apiKey}`)
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&${apiKey}`)
         .then((response)=>{
             return response.json();
         })
@@ -17,10 +16,15 @@ function WeatherApi() {
             }
             data=`lat=${data[i].lat}&lon=${data[i].lon}`;
             console.log(data);
+        fetch(`http://api.openweathermap.org/data/2.5/weather?${data}&${apiKey}`) 
+        .then((weather)=>{
+            return weather.json();
         })
-    }
-    
-    fetch(`http://api.openweathermap.org/data/2.5/weather?${geoApi('London','GB')}&${apiKey}`)
+        .then((weatherData)=>{
+            console.log(weatherData)
+        })       
+    })
+        
 }
 
 export default WeatherApi;
